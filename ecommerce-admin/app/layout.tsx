@@ -36,7 +36,7 @@ export default async function RootLayout({
         className={`${inter.className} antialiased bg-zinc-800 flex min-h-screen`}
       >
         <NavBar />
-        <main className="bg-white flex-grow">{children}</main>
+        <main className="bg-white flex-grow p-4">{children}</main>
       </body>
     </html>
   );
