@@ -1,4 +1,5 @@
 "use client";
+import axios from "axios";
 import { FormEvent, useState } from "react";
 import { ToastContainer, toast } from "react-toastify";
 import "react-toastify/dist/ReactToastify.css";
@@ -8,15 +9,30 @@ export default function NewProduct() {
   const [description, setDescription] = useState("");
   const [price, setPrice] = useState("");
 
-  const notify = () =>
+  const successNotify = () =>
     toast.success("Product added successfully", {
       position: "top-right",
       autoClose: 3000, // Tiempo de duración en ms
     });
 
-  function handleSubmit(e: FormEvent<HTMLFormElement>) {
+  const errorNotify = () =>
+    toast.error("Product not added, try again ", {
+      position: "top-right",
+      autoClose: 3000, // Tiempo de duración en ms
+    });
+
+  async function handleSubmit(e: FormEvent<HTMLFormElement>) {
     e.preventDefault();
-    notify();
+    const data = { title, description, price };
+    try {
+      const response = await axios.post("/api/products", data);
+      successNotify();
+      setTitle("");
+      setDescription("");
+      setPrice("");
+    } catch (error) {
+      errorNotify();
+    }
   }
 
   return (
@@ -41,7 +57,7 @@ export default function NewProduct() {
         ></textarea>
       </fieldset>
       <fieldset>
-        <legend>Price</legend>
+        <legend>Price $(USD)</legend>
         <input
           type="number"
           min={0}
