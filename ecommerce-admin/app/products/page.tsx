@@ -1,7 +1,23 @@
+"use client";
+import axios from "axios";
 import Link from "next/link";
-import { useEffect } from "react";
+import { useEffect, useState } from "react";
+
+type Products = {
+  _id: string;
+  title: string;
+  description: string;
+  price: string;
+};
 
 export default function Products() {
+  const [products, setProducts] = useState<Products[]>([]);
+  useEffect(() => {
+    axios.get("/api/products").then((res) => {
+      setProducts(res.data);
+    });
+  }, []);
+
   return (
     <div className="">
       <Link
@@ -24,6 +40,22 @@ export default function Products() {
         </svg>
         Add new product
       </Link>
+      <table>
+        <thead>
+          <tr>
+            <td>Product Name</td>
+            <td></td>
+          </tr>
+        </thead>
+        <tbody>
+          {products.map((product) => (
+            <tr key={product._id}>
+              <td>{product.title}</td>
+              <td>buttons</td>
+            </tr>
+          ))}
+        </tbody>
+      </table>
     </div>
   );
 }

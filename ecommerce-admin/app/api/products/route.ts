@@ -26,9 +26,15 @@ import { Product } from "@/models/Product";
 //   }
 // }
 
+export async function GET() {
+  await mongooseConnect();
+  const products = await Product.find();
+  return Response.json(products);
+}
+
 export async function POST(request: Request) {
   await mongooseConnect();
   const { title, description, price } = await request.json();
   const productDoc = await Product.create({ title, description, price });
-  return Response.json({ message: "Product successfully added", productDoc });
+  return Response.json(productDoc);
 }
