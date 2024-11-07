@@ -12,13 +12,13 @@ export default function NewProduct() {
   const successNotify = () =>
     toast.success("Product added successfully", {
       position: "top-right",
-      autoClose: 3000, // Tiempo de duración en ms
+      autoClose: 3000, //Duration time in ms
     });
 
   const errorNotify = () =>
     toast.error("Product not added, try again ", {
       position: "top-right",
-      autoClose: 3000, // Tiempo de duración en ms
+      autoClose: 3000, //Duration time in ms
     });
 
   async function handleSubmit(e: FormEvent<HTMLFormElement>) {
